@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Merit Calculator</string>
+    <string name="title_activity_main">Merit Calculator</string>
+    <string name="package_name">pk.meritcalc.app</string>
+    <string name="custom_url_scheme">pk.meritcalc.app</string>
+</resources>

@@ -1,0 +1,10 @@
+{
+  "appId": "pk.meritcalc.app",
+  "appName": "Merit Calculator",
+  "webDir": "www",
+  "android": { "backgroundColor": "#0E4A31" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 500, "launchAutoHide": true, "backgroundColor": "#0E4A31", "showSpinner": false, "androidScaleType": "CENTER_CROP" },
+    "StatusBar": { "backgroundColor": "#F1F4EF", "style": "LIGHT", "overlaysWebView": false }
+  }
+}
