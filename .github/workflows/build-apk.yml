@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   build:
-    # Pinned: "ubuntu-latest" moved to Ubuntu 26 on Oct 19, 2026
     runs-on: ubuntu-24.04
     steps:
       - name: Get the code
@@ -20,7 +19,7 @@ jobs:
         run: |
           if [ ! -f package.json ] || [ ! -d android ] || [ ! -d www ]; then
             echo "::error::package.json, android and www must be at the top level of the repository, not inside another folder."
-            echo "Files found at the top level:"; ls -la
+            ls -la
             exit 1
           fi
 
@@ -35,7 +34,21 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Set up Android SDK
+      - name: Find Android SDK
+        id: sdk
+        run: |
+          SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          if [ -n "$SDK" ] && [ -d "$SDK" ]; then
+            echo "Android SDK found at $SDK"
+            echo "sdk.dir=$SDK" > android/local.properties
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Android SDK not on this machine, installing it."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Android SDK (only if missing)
+        if: steps.sdk.outputs.found != 'true'
         uses: android-actions/setup-android@v3
 
       - name: Install Capacitor
@@ -44,31 +57,52 @@ jobs:
       - name: Copy the web app into Android
         run: npx cap sync android
 
-      - name: Prepare signing key
+      - name: Check signing key
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | tr -d ' \r\n' | base64 -d > "$RUNNER_TEMP/release.jks"
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::warning::No KEYSTORE_BASE64 secret. Building a debug APK instead."
+            exit 0
+          fi
+          printf '%s' "$KEYSTORE_BASE64" | tr -d ' \r\n\t' | base64 -d > "$RUNNER_TEMP/release.jks" 2>/dev/null || true
+          PW="$(printf '%s' "$KEYSTORE_PASSWORD" | tr -d ' \r\n\t')"
+          AL="$(printf '%s' "$KEY_ALIAS" | tr -d ' \r\n\t')"
+          if keytool -list -keystore "$RUNNER_TEMP/release.jks" -storepass "$PW" -alias "$AL" > /dev/null 2>&1; then
+            echo "Signing key is OK."
             echo "KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+            echo "KEYSTORE_PASSWORD=$PW" >> "$GITHUB_ENV"
+            echo "KEY_PASSWORD=$PW" >> "$GITHUB_ENV"
+            echo "KEY_ALIAS=$AL" >> "$GITHUB_ENV"
           else
-            echo "::warning::No KEYSTORE_BASE64 secret, building an unsigned debug APK."
+            echo "::warning::The signing secrets don't match (KEYSTORE_BASE64, KEYSTORE_PASSWORD or KEY_ALIAS was pasted wrongly). Building a debug APK instead."
           fi
 
       - name: Build APK
         working-directory: android
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           chmod +x gradlew
+          LOG="$RUNNER_TEMP/gradle.log"
+          gbuild() { ./gradlew "$1" --no-daemon 2>&1 | tee "$LOG"; return "${PIPESTATUS[0]}"; }
+          report() {
+            MSG=$(grep -A8 "What went wrong" "$LOG" | grep -v "^\s*$" | head -6 | tr '\n' ' ')
+            echo "::error::$1 ${MSG:-Open the Build APK step for details.}"
+          }
           if [ -n "$KEYSTORE_FILE" ]; then
-            ./gradlew assembleRelease --no-daemon --stacktrace
-            cp app/build/outputs/apk/release/app-release.apk ../MeritCalculator.apk
-          else
-            ./gradlew assembleDebug --no-daemon --stacktrace
+            if gbuild assembleRelease; then
+              cp app/build/outputs/apk/release/app-release.apk ../MeritCalculator.apk
+              echo "Built a signed release APK."; exit 0
+            fi
+            report "Signed build failed:"
+            echo "::warning::Signed build failed, building a debug APK instead."
+          fi
+          if gbuild assembleDebug; then
             cp app/build/outputs/apk/debug/app-debug.apk ../MeritCalculator.apk
+            echo "Built a debug APK."
+          else
+            report "Build failed:"; exit 1
           fi
 
       - name: Publish APK as a download
