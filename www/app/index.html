@@ -60,6 +60,12 @@ button{font:inherit;color:inherit}
 #app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:var(--bg);position:relative}
 @media(min-width:520px){#app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
 .topbar{flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px 8px}
+.upd{flex:none;margin:0 16px 10px;padding:12px 14px;border-radius:16px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:12px}
+.upd[hidden]{display:none}
+.upd .ut{flex:1;min-width:0;font-size:14px;line-height:1.35}
+.upd .ut b{display:block;font-size:15px}
+.upd a{flex:none;background:#fff;color:var(--navy);font-weight:800;font-size:14px;padding:9px 14px;border-radius:12px;text-decoration:none}
+.upd button{flex:none;background:transparent;border:0;color:#fff;opacity:.8;font-size:20px;line-height:1;cursor:pointer;padding:4px}
 .topbar .mark{width:34px;height:34px;flex:none}
 .topbar h1{font:800 21px/1 var(--display);letter-spacing:-.02em;margin:0;flex:1}
 .iconbtn{width:40px;height:40px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
@@ -263,6 +269,7 @@ button{font:inherit;color:inherit}
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>
     </button>
   </header>
+  <div class="upd" id="upd" hidden role="status"><div class="ut"><b>Update available</b><span id="updTxt">A newer version with the latest formulas is ready.</span></div><a id="updGo" href="#">Update</a><button id="updX" type="button" aria-label="Later">×</button></div>
   <main class="screen" id="screen"></main>
   <div class="actionbar" id="actionbar"></div>
   <nav class="tabbar" role="tablist">
@@ -291,6 +298,7 @@ button{font:inherit;color:inherit}
   </defs>
 </svg>
 
+<script src="build.js"></script>
 <script>
 /* ================= FORMULA FILE =================
    Update these each admission season.
@@ -660,9 +668,27 @@ let sx=null;
 $("slides").addEventListener("touchstart", e=>{ sx=e.touches[0].clientX; }, {passive:true});
 $("slides").addEventListener("touchend", e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; if(dx<-50&&ob<2) obGo(ob+1); if(dx>50&&ob>0) obGo(ob-1); sx=null; });
 
+/* ---------- In-app update check (Android app only) ---------- */
+async function checkUpdate(){
+  if (!isApp() || !navigator.onLine) return;
+  try {
+    const r = await fetch("https://api.github.com/repos/saadahmad888/meritkitni/releases/latest", {headers:{Accept:"application/vnd.github+json"}});
+    if (!r.ok) return;
+    const j = await r.json();
+    const latest = parseInt(String(j.tag_name || "").split(".").pop(), 10);
+    const mine = Number(window.APP_BUILD || 0);
+    if (!(latest > mine)) return;
+    let skipped = 0; try { skipped = Number(localStorage.getItem("upd-skip") || 0); } catch(e){}
+    if (skipped === latest) return;
+    $("updTxt").textContent = "Version " + String(j.tag_name).replace(/^v/,"") + " has the latest formulas and fixes.";
+    $("updGo").href = APK_URL;
+    $("updX").onclick = () => { $("upd").hidden = true; try { localStorage.setItem("upd-skip", String(latest)); } catch(e){} };
+    $("upd").hidden = false;
+  } catch(e) {}
+}
 /* ---------- Start ---------- */
 function isApp(){ return !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); }
-function showApk(){ return !isApp() && !APK_URL.includes("saadahmad888"); }
+function showApk(){ return !isApp(); }
 if ("serviceWorker" in navigator && location.protocol === "https:" && !isApp()) {
   navigator.serviceWorker.register("sw.js").catch(()=>{});
 }
@@ -676,6 +702,7 @@ setTab("calc");
 if (!S.onboarded) $("onboard").classList.add("show");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 setTimeout(()=>{ $("splash").classList.add("hide"); setTimeout(()=>$("splash").remove(), 500); }, reduce ? 300 : 1600);
+setTimeout(checkUpdate, 2000);
 </script>
 </body>
 </html>

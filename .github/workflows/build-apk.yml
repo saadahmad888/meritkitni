@@ -54,6 +54,9 @@ jobs:
       - name: Install Capacitor
         run: npm ci || npm install
 
+      - name: Stamp the app version
+        run: echo "window.APP_BUILD = ${{ github.run_number }};" > www/app/build.js
+
       - name: Copy the web app into Android
         run: npx cap sync android
 
