@@ -2,661 +2,478 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<!-- Inside the Android app, skip the website and open the calculator directly -->
+<script>
+  if (location.hostname === "localhost" || (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())) location.replace("app/");
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merit Calculator 2026 – UET, PU, UOG, GCU &amp; UCP Aggregate</title>
+<meta name="description" content="Merit kitni banegi? Calculate your 2026 merit for UET, Punjab University, UOG, GCU, UCP, UOL, GIFT, NUST, FAST, MDCAT and 25+ universities in seconds.">
+<meta name="keywords" content="merit calculator, aggregate calculator, UOG merit calculator, UET aggregate calculator, PU merit calculator, MDCAT aggregate calculator, merit kitni banegi">
+<meta name="author" content="Saad Ahmad">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0E4A31">
-<meta name="description" content="Merit kitni banegi? Free aggregate calculator for UET, PU, GCU, UCP, UOL, GIFT, UOG, Chenab and more.">
-<link rel="manifest" href="manifest.json">
+<link rel="canonical" href="https://meritkitni.pages.dev/">
+<link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>Merit Calculator</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23146B45'/%3E%3Cpath d='M256 92l164 66-164 66-164-66z' fill='white'/%3E%3C/svg%3E">
+<link rel="manifest" href="app/manifest.json">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Merit Calculator">
+<meta property="og:locale" content="en_PK">
+<meta property="og:title" content="Merit Calculator 2026 – Merit kitni banegi?">
+<meta property="og:description" content="Enter your marks once and see your aggregate for UET, PU, UOG, GCU, UCP, NUST, FAST, MDCAT and 25+ universities. Android app and web app.">
+<meta property="og:url" content="https://meritkitni.pages.dev/">
+<meta property="og:image" content="https://meritkitni.pages.dev/og-image.jpg">
+<meta property="og:image:secure_url" content="https://meritkitni.pages.dev/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Merit Calculator – Merit kitni banegi? Aggregate calculator for Pakistani universities">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@isaadahmad">
+<meta name="twitter:title" content="Merit Calculator 2026 – Merit kitni banegi?">
+<meta name="twitter:description" content="Your aggregate for UET, PU, UOG, GCU, UCP, NUST, FAST, MDCAT and 25+ universities, in seconds.">
+<meta name="twitter:image" content="https://meritkitni.pages.dev/og-image.jpg">
+<meta name="twitter:image:alt" content="Merit Calculator – aggregate calculator for Pakistani universities">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F1F4EF; --surface:#FFFFFF; --surface-2:#E7EEE8; --ink:#0F2419; --muted:#5A6D62; --line:#D6DFD7;
-  --green:#17794D; --green-deep:#0E4A31; --green-soft:#DAEEE1; --navy:#24338F; --navy-2:#3A4FCF;
-  --amber:#8A5A00; --amber-soft:#FCEFD2; --warn:#A4401A;
+  --bg:#F1F4EF; --surface:#FFFFFF; --surface-2:#E7EEE8; --ink:#0F2419; --muted:#56695E; --line:#D6DFD7;
+  --green:#17794D; --green-2:#1F8F5C; --green-deep:#0E4A31; --green-soft:#DAEEE1; --navy:#24338F; --navy-2:#3A4FCF;
+  --amber:#8A5A00; --amber-soft:#FCEFD2;
   --display:"Bricolage Grotesque","Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  color-scheme:light;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --bg:#0C1611; --surface:#14221B; --surface-2:#1B2C23; --ink:#E5EEE8; --muted:#9BB0A4; --line:#273B30;
-    --green:#4CC48A; --green-deep:#0B3A26; --green-soft:#1A3427; --navy:#2B3AA3; --navy-2:#3C51D6;
-    --amber:#F2C46B; --amber-soft:#3A2E14; --warn:#F09A74; color-scheme:dark;
+    --green:#4CC48A; --green-2:#3DB57B; --green-deep:#0B3A26; --green-soft:#1A3427; --navy:#2B3AA3; --navy-2:#3C51D6;
+    --amber:#F2C46B; --amber-soft:#3A2E14; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0C1611; --surface:#14221B; --surface-2:#1B2C23; --ink:#E5EEE8; --muted:#9BB0A4; --line:#273B30;
-  --green:#4CC48A; --green-deep:#0B3A26; --green-soft:#1A3427; --navy:#2B3AA3; --navy-2:#3C51D6;
-  --amber:#F2C46B; --amber-soft:#3A2E14; --warn:#F09A74; color-scheme:dark;
+  --green:#4CC48A; --green-2:#3DB57B; --green-deep:#0B3A26; --green-soft:#1A3427; --navy:#2B3AA3; --navy-2:#3C51D6;
+  --amber:#F2C46B; --amber-soft:#3A2E14; color-scheme:dark;
 }
-*,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;margin:0}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--body);-webkit-font-smoothing:antialiased;overflow:hidden;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-input{user-select:text;-webkit-user-select:text}
-button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;line-height:1.05;margin:0}
+h2{font-size:clamp(32px,5vw,48px);font-weight:800}
+.kicker{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+.lede{color:var(--muted);font-size:clamp(17px,2vw,19px);max-width:60ch;margin:14px 0 0}
+section{padding:84px 0}
 
-/* App shell */
-#app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:var(--bg);position:relative}
-@media(min-width:520px){#app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
-.topbar{flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px 8px}
-.topbar .mark{width:34px;height:34px;flex:none}
-.topbar h1{font:800 21px/1 var(--display);letter-spacing:-.02em;margin:0;flex:1}
-.iconbtn{width:40px;height:40px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
-.iconbtn:active{background:var(--surface-2)}
-.screen{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 16px 20px;overscroll-behavior:contain}
-.actionbar{flex:none;padding:10px 16px 12px;display:flex;gap:10px;background:var(--bg)}
-.tabbar{flex:none;display:flex;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px 8px}
-.tab{flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:12px}
-.tab svg{width:24px;height:24px}
-.tab .pill{padding:3px 18px;border-radius:999px;display:grid;place-items:center}
-.tab[aria-selected="true"]{color:var(--ink)}
-.tab[aria-selected="true"] .pill{background:var(--green-soft);color:var(--green)}
+/* Header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;gap:20px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 20px var(--display);letter-spacing:-.02em}
+.brand svg{width:36px;height:36px}
+.navlinks{display:flex;gap:26px;margin-left:auto;font-weight:600;font-size:15px}
+.navlinks a{text-decoration:none;color:var(--muted)}
+.navlinks a:hover{color:var(--ink)}
+@media(max-width:860px){.navlinks{display:none}.nav .btn{margin-left:auto}}
 
 /* Buttons */
-.btn{flex:1;border:0;border-radius:16px;padding:16px 18px;font-weight:700;font-size:16px;cursor:pointer;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn:active{transform:scale(.985)}
-.btn.ghost{flex:0 0 auto;background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
-.btn:disabled{opacity:.45;cursor:default;transform:none}
-.link{border:0;background:none;color:var(--green);font-weight:700;cursor:pointer;padding:6px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;font-weight:700;border-radius:16px;padding:15px 22px;font-size:16px;border:1.5px solid transparent;transition:transform .15s ease,background .15s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--green);color:#fff}
+.btn.primary:hover{background:var(--green-2)}
+.btn.secondary{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.secondary:hover{border-color:var(--green)}
+.btn.small{padding:10px 16px;font-size:15px;border-radius:12px;white-space:nowrap}
+@media(max-width:420px){.brand{font-size:16px;white-space:nowrap;gap:8px}.brand svg{width:30px;height:30px}.btn.small{padding:8px 12px;font-size:14px}}
+@media(max-width:370px){.brand{font-size:15px}.nav{gap:10px}}
+.btn svg{width:20px;height:20px;flex:none}
+.btn small{display:block;font-weight:500;font-size:12.5px;opacity:.85;line-height:1.2}
+.btn .two{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
 
-/* Wizard */
-.progress{display:flex;gap:6px;margin:6px 0 18px}
-.progress i{flex:1;height:5px;border-radius:4px;background:var(--line)}
-.progress i.on{background:var(--green)}
-.stepno{color:var(--muted);font-weight:600;font-size:14px;margin:0 0 4px}
-.h{font:800 28px/1.08 var(--display);letter-spacing:-.025em;margin:0 0 6px}
-.lead{color:var(--muted);margin:0 0 18px}
-.seg{display:flex;background:var(--surface-2);border-radius:14px;padding:4px;gap:4px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
-.seg::-webkit-scrollbar{display:none}
-.seg button{flex:1 0 auto;border:0;background:transparent;border-radius:10px;padding:9px 12px;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer;white-space:nowrap}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:0 12px;margin-bottom:12px}
-.search input{flex:1;border:0;background:transparent;padding:12px 0;font:500 16px var(--body);color:var(--ink);outline:none;min-width:0}
-.search svg{color:var(--muted);flex:none}
-.group{margin:14px 2px 6px;font-weight:700;font-size:14px;color:var(--muted)}
-.rows{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.urow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:transparent;padding:13px 14px;cursor:pointer;border-top:1px solid var(--line)}
-.urow:first-child{border-top:0}
-.urow:active{background:var(--surface-2)}
-.avatar{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;font:800 13px var(--display);color:#fff;letter-spacing:-.02em}
-.urow .txt{flex:1;min-width:0}
-.urow .t1{font-weight:700;font-size:15.5px;line-height:1.25}
-.urow .t2{color:var(--muted);font-size:13.5px;line-height:1.3;margin-top:2px}
-.badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:5px}
-.badge.official{background:var(--green-soft);color:var(--green)}
-.badge.estimate{background:var(--amber-soft);color:var(--amber)}
-.check{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;color:#fff}
-.urow[aria-checked="true"] .check{background:var(--green);border-color:var(--green)}
-.chev{color:var(--muted);flex:none}
+/* Hero */
+.hero{padding:48px 0 72px}
+.hero-grid{display:grid;gap:48px;align-items:center}
+@media(min-width:920px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--green-soft);color:var(--green);font-weight:700;font-size:15px;padding:7px 14px;border-radius:999px}
+.hero h1.pill{font:700 15px/1.3 var(--body);letter-spacing:0;margin:0}
+.display{font-family:var(--display);font-size:clamp(46px,8vw,84px);font-weight:800;letter-spacing:-.04em;line-height:1.02;margin:18px 0 0}
+.display em{font-style:normal;color:var(--green)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.facts{display:flex;flex-wrap:wrap;gap:22px;margin-top:30px;color:var(--muted);font-size:15px}
+.facts b{display:block;font:800 26px var(--display);color:var(--ink);letter-spacing:-.02em}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
-.mk label{display:block;font-weight:700;margin-bottom:8px}
-.pair{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;overflow:hidden}
-.pair:focus-within{border-color:var(--green)}
-.pair input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:700 22px var(--display);padding:13px 14px;outline:none}
-.pair .of{color:var(--muted);font-weight:600;padding:0 4px}
-.pair input.tot{flex:0 0 96px;font-weight:600;color:var(--muted)}
-.live{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:14px;color:var(--muted)}
-.live b{font:800 20px var(--display);color:var(--ink)}
-.err{color:var(--warn);font-size:13.5px;margin-top:8px;font-weight:600}
-.hint{font-size:13.5px;color:var(--muted);margin-top:8px}
-.usedby{font-size:13px;color:var(--muted);margin:-4px 0 10px}
-.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
-.toggle .tt{font-weight:700}
-.toggle .ts{font-size:13.5px;color:var(--muted)}
-.switch{width:50px;height:30px;border-radius:999px;background:var(--line);position:relative;flex:none;border:0;cursor:pointer;transition:background .2s}
-.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.switch[aria-checked="true"]{background:var(--green)}
-.switch[aria-checked="true"]::after{transform:translateX(20px)}
+/* Phone mockup */
+.phone-zone{position:relative;display:flex;justify-content:center;padding:10px 0}
+.phone-zone::before{content:"";position:absolute;inset:8% 4%;border-radius:48px;background:radial-gradient(70% 60% at 50% 40%,var(--green-soft),transparent 70%)}
+.phone{position:relative;width:min(320px,82vw);border-radius:44px;background:#0B1210;padding:12px;box-shadow:0 30px 70px rgba(10,40,25,.28),0 0 0 1px rgba(255,255,255,.06) inset}
+.screen{border-radius:34px;overflow:hidden;background:#F1F4EF;color:#0F2419;font-family:var(--body)}
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 4px;font-size:12px;font-weight:700}
+.notch{width:86px;height:22px;background:#0B1210;border-radius:14px}
+.ptop{display:flex;align-items:center;gap:8px;padding:8px 16px;font:800 17px var(--display)}
+.ptop svg{width:26px;height:26px}
+.phero{margin:6px 14px 10px;border-radius:20px;padding:16px;color:#fff;background:linear-gradient(150deg,#24338F,#3A4FCF)}
+.phero .k{font-size:11.5px;opacity:.85;font-weight:600}
+.phero .v{font:800 42px/1 var(--display);letter-spacing:-.04em;margin:6px 0 2px}
+.phero .v small{font-size:.45em;opacity:.8}
+.phero .s{font-size:12px;opacity:.9}
+.prow{display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid #D6DFD7;border-radius:16px;margin:0 14px 8px;padding:11px 12px}
+.prow .t{display:flex;align-items:center;gap:9px}
+.av{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font:800 10px var(--display);flex:none}
+.prow .n{flex:1;font-weight:700;font-size:13px;line-height:1.2}
+.prow .n span{display:block;font-weight:500;color:#5A6D62;font-size:11px}
+.prow .p{font:800 17px var(--display)}
+.bar{height:5px;border-radius:4px;background:#E7EEE8;overflow:hidden}
+.bar i{display:block;height:100%;background:#17794D;border-radius:4px}
+.ptabs{display:flex;justify-content:space-around;border-top:1px solid #D6DFD7;background:#fff;padding:10px 0 16px;margin-top:6px;font-size:10.5px;font-weight:700;color:#5A6D62}
+.ptabs span.on{color:#17794D}
+.float{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:0 12px 30px rgba(0,0,0,.12);font-size:13.5px;font-weight:600;color:var(--ink)}
+.float b{display:block;font:800 18px var(--display)}
+.f1{right:-8px;top:24%}
+.f2{left:-8px;bottom:5%}
+@media(max-width:520px){.f1{right:0;top:2%}.f2{left:0;bottom:1%}}
 
-/* Results */
-.hero{background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#fff;border-radius:24px;padding:20px;margin-bottom:16px}
-.hero .k{font-size:14px;opacity:.85;font-weight:600}
-.hero .v{font:800 56px/1 var(--display);letter-spacing:-.04em;margin:8px 0 4px}
-.hero .v small{font-size:.45em;opacity:.8}
-.hero .s{font-size:15px;opacity:.92}
-.rcard{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px;cursor:pointer}
-.rcard:active{background:var(--surface-2)}
-.rtop{display:flex;align-items:center;gap:12px}
-.rtop .txt{flex:1;min-width:0}
-.rval{font:800 24px var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.rval.miss{font:600 13px var(--body);color:var(--muted);text-align:right;max-width:110px}
-.rbar{height:7px;border-radius:5px;background:var(--surface-2);margin-top:12px;overflow:hidden}
-.rbar i{display:block;height:100%;border-radius:5px;background:var(--green)}
-.empty{text-align:center;padding:40px 12px}
-.empty svg{color:var(--green);margin-bottom:10px}
-.empty p{color:var(--muted);margin:6px 0 18px}
+/* Problem */
+.problem{background:var(--green-deep);color:#EAF6EF}
+.problem .kicker{color:#8FE3B7}
+.problem .lede{color:#B9D4C4}
+.compare{display:grid;gap:14px;margin-top:40px}
+@media(min-width:760px){.compare{grid-template-columns:repeat(3,1fr)}}
+.ccard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px}
+.ccard h3{font-size:22px}
+.ccard .sub{color:#B9D4C4;font-size:14.5px;margin:4px 0 16px}
+.wbar{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:3px}
+.wbar i{display:block;height:100%;border-radius:4px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:13.5px;color:#D3E7DB}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend span::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c)}
 
-/* Sheet */
-.scrim{position:fixed;inset:0;background:rgba(5,15,10,.45);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
-.scrim.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:480px;max-height:90%;background:var(--surface);border-radius:26px 26px 0 0;z-index:41;transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}
-.sheet.open{transform:none}
-.grab{width:42px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 4px;flex:none}
-.sheet .sc{overflow-y:auto;padding:6px 18px 22px;-webkit-overflow-scrolling:touch}
-.sheet h2{font:800 25px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 2px}
-.sheet .sub{color:var(--muted);margin:0}
-.agg{margin:16px 0 6px;padding:16px;border-radius:18px;background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#fff}
-.agg .v{font:800 48px/1 var(--display);letter-spacing:-.035em}
-.agg .v small{font-size:.45em;opacity:.8}
-.agg .m{font-size:15px}
-.part{margin-top:12px}
-.part .pl{display:flex;justify-content:space-between;font-size:14px;gap:8px}
-.part .pl b{font-variant-numeric:tabular-nums}
-.part .pb{height:8px;border-radius:5px;background:rgba(255,255,255,.2);margin-top:5px;overflow:hidden}
-.part .pb i{display:block;height:100%;background:#9BE7C0;border-radius:5px}
-.sec{margin-top:18px}
-.sec h3{font:700 16px var(--display);margin:0 0 8px}
-.formula{font-size:14.5px;background:var(--surface-2);border-radius:14px;padding:12px 14px}
-.note{font-size:14px;color:var(--muted);margin-top:10px}
-.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.wgrid label{font-size:12.5px;font-weight:700;display:block;margin-bottom:4px;color:var(--muted)}
-.wgrid input,.tgt input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px;font:700 17px var(--body);background:var(--bg);color:var(--ink)}
-.tgt{display:flex;align-items:center;gap:10px}
-.tgt input{width:90px}
-.tgtout{margin:10px 0 0;font-size:14.5px;color:var(--muted)}
-.tgtout strong{color:var(--ink)}
+/* Steps */
+.steps{display:grid;gap:16px;margin-top:40px;counter-reset:s}
+@media(min-width:820px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:26px}
+.step .no{font:800 15px var(--display);color:var(--green);background:var(--green-soft);width:38px;height:38px;border-radius:12px;display:grid;place-items:center}
+.step h3{font-size:24px;margin:18px 0 6px}
+.step p{color:var(--muted);margin:0}
 
-/* Splash + onboarding */
-#splash{position:fixed;inset:0;z-index:100;background:radial-gradient(120% 80% at 50% 30%,#1C8A58 0%,#0E4A31 60%,#082C1D 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:opacity .45s ease}
-#splash.hide{opacity:0;pointer-events:none}
-#splash .logo{width:112px;height:112px;animation:pop .7s cubic-bezier(.2,1.4,.4,1) both;filter:drop-shadow(0 18px 30px rgba(0,0,0,.3))}
-#splash .nm{font:800 30px var(--display);letter-spacing:-.02em;margin-top:22px;animation:rise .6s .25s both}
-#splash .tg{opacity:.8;margin-top:4px;animation:rise .6s .35s both}
-#splash .dots{position:absolute;bottom:calc(48px + env(safe-area-inset-bottom,0px));display:flex;gap:7px}
-#splash .dots i{width:7px;height:7px;border-radius:50%;background:#fff;opacity:.35;animation:blink 1s infinite}
-#splash .dots i:nth-child(2){animation-delay:.15s}#splash .dots i:nth-child(3){animation-delay:.3s}
-@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
-@keyframes rise{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
-@keyframes blink{50%{opacity:1}}
-#onboard{position:fixed;inset:0;z-index:90;background:var(--bg);display:none;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 22px calc(18px + env(safe-area-inset-bottom,0px))}
-#onboard.show{display:flex}
-#onboard .skip{align-self:flex-end}
-.slides{flex:1;display:flex;overflow:hidden}
-.slide{flex:0 0 100%;display:flex;flex-direction:column;justify-content:center;transition:transform .35s ease}
-.art{height:240px;border-radius:28px;margin-bottom:28px;position:relative;overflow:hidden;display:grid;place-items:center}
-.slide h2{font:800 32px/1.05 var(--display);letter-spacing:-.03em;margin:0 0 10px}
-.slide p{color:var(--muted);font-size:17px;margin:0}
-.obnav{display:flex;align-items:center;gap:14px;margin-top:18px}
-.obdots{display:flex;gap:6px;flex:1}
-.obdots i{width:8px;height:8px;border-radius:5px;background:var(--line);transition:width .25s}
-.obdots i.on{width:24px;background:var(--green)}
-.mini{background:var(--surface);border-radius:14px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.12);font-weight:700;color:var(--ink)}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Features */
+.feat{display:grid;gap:14px;margin-top:40px}
+@media(min-width:700px){.feat{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.feat{grid-template-columns:repeat(3,1fr)}}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px}
+.ficon{width:44px;height:44px;border-radius:14px;background:var(--green-soft);color:var(--green);display:grid;place-items:center}
+.ficon svg{width:24px;height:24px}
+.fcard h3{font-size:20px;margin:16px 0 6px;letter-spacing:-.015em}
+.fcard p{color:var(--muted);margin:0;font-size:16px}
+
+/* Universities */
+.cities{display:grid;gap:14px;margin-top:40px}
+@media(min-width:820px){.cities{grid-template-columns:repeat(2,1fr)}}
+.city{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px}
+.city h3{font-size:22px;display:flex;justify-content:space-between;align-items:baseline}
+.city h3 span{font:600 14px var(--body);color:var(--muted);letter-spacing:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chips a{background:var(--surface-2);border-radius:10px;padding:6px 11px;font-weight:600;font-size:14.5px;text-decoration:none;color:var(--ink);border:1.5px solid transparent}
+.chips a:hover{border-color:var(--green);color:var(--green)}
+.note{margin-top:18px;color:var(--muted);font-size:15px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.badge{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+.badge.o{background:var(--green-soft);color:var(--green)}
+.badge.e{background:var(--amber-soft);color:var(--amber)}
+
+/* Audience */
+.aud{display:grid;gap:14px;margin-top:40px}
+@media(min-width:700px){.aud{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.aud{grid-template-columns:repeat(4,1fr)}}
+.acard{border-radius:22px;padding:24px;background:var(--surface);border:1px solid var(--line)}
+.acard .em{font-size:30px;line-height:1}
+.acard h3{font-size:20px;margin:14px 0 6px}
+.acard p{margin:0;color:var(--muted);font-size:16px}
+
+/* Download */
+.download{padding:0 0 84px}
+.dl{border-radius:32px;padding:clamp(28px,5vw,56px);background:radial-gradient(120% 120% at 0% 0%,#1F8F5C 0%,#0E4A31 55%,#082C1D 100%);color:#fff;display:grid;gap:36px}
+@media(min-width:900px){.dl{grid-template-columns:1.1fr .9fr;align-items:center}}
+.dl h2{color:#fff}
+.dl .lede{color:#CDE7D8}
+.dl .btn.primary{background:#fff;color:#0E4A31}
+.dl .btn.primary:hover{background:#E8F7EE}
+.dl .btn.secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.dl .btn.secondary:hover{border-color:#fff}
+.install{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:22px}
+.install h3{font-size:19px;margin-bottom:12px}
+.install ol{margin:0;padding-left:22px;color:#E3F3EA}
+.install li{margin:6px 0}
+.install p{margin:12px 0 0;font-size:14px;color:#B9D4C4}
+
+/* FAQ */
+.faq{max-width:820px;margin-top:36px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:18px;margin-bottom:10px;padding:0 20px}
+summary{cursor:pointer;list-style:none;font-weight:700;font-size:17.5px;padding:18px 30px 18px 0;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font:600 26px var(--display);color:var(--green)}
+details[open] summary::after{content:"–"}
+details p{margin:0 0 18px;color:var(--muted)}
+
+/* Creator */
+.creator{display:grid;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:32px;padding:clamp(24px,5vw,48px)}
+@media(min-width:860px){.creator{grid-template-columns:auto 1fr auto}}
+.me{width:112px;height:112px;border-radius:30px;object-fit:cover;background:var(--green-soft);display:block}
+.me.ini{display:grid;place-items:center;font:800 40px var(--display);color:var(--green)}
+.creator h2{font-size:clamp(28px,4vw,40px)}
+.creator .role{color:var(--muted);margin:6px 0 0}
+.creator .pitch{margin:14px 0 0;max-width:56ch}
+.clinks{display:flex;flex-direction:column;gap:10px;min-width:230px}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.stats span{background:var(--surface-2);border-radius:10px;padding:6px 12px;font-size:14.5px;color:var(--muted)}
+.stats b{color:var(--ink);font-family:var(--display)}
+.socials{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:15px}
+.socials a{color:var(--green);font-weight:700;text-decoration:none}
+.socials a:hover{text-decoration:underline}
+
+footer{padding:40px 0 48px;color:var(--muted);font-size:15px}
+.frow{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:28px}
+.flinks{display:flex;flex-wrap:wrap;gap:18px}
+.flinks a{text-decoration:none;font-weight:600}
+.flinks a:hover{color:var(--ink)}
+.disc{margin-top:14px;font-size:13.5px;max-width:80ch}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://meritkitni.pages.dev/#website", "name": "Merit Calculator", "alternateName": ["Merit Kitni", "Merit Kitni Banegi"], "url": "https://meritkitni.pages.dev/", "inLanguage": "en-PK", "publisher": {"@id": "https://isaadahmad.com/#person"}}, {"@type": "Person", "@id": "https://isaadahmad.com/#person", "name": "Saad Ahmad", "url": "https://isaadahmad.com", "jobTitle": "Senior Frontend Developer", "sameAs": ["https://github.com/saadahmad888", "https://linkedin.com/in/isaadahmad", "https://twitter.com/isaadahmad", "https://dev.to/isaadahmad"]}, {"@type": "SoftwareApplication", "name": "Merit Calculator", "operatingSystem": "Android, Web", "applicationCategory": "EducationalApplication", "url": "https://meritkitni.pages.dev/", "downloadUrl": "https://github.com/saadahmad888/meritkitni/releases/latest/download/MeritCalculator.apk", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "PKR"}, "author": {"@id": "https://isaadahmad.com/#person"}}, {"@type": "ItemList", "name": "University merit calculators", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "UOG Merit Calculator 2026", "url": "https://meritkitni.pages.dev/uog-merit-calculator/"}, {"@type": "ListItem", "position": 2, "name": "UET Merit Calculator 2026", "url": "https://meritkitni.pages.dev/uet-merit-calculator/"}, {"@type": "ListItem", "position": 3, "name": "Punjab University Merit Calculator 2026", "url": "https://meritkitni.pages.dev/punjab-university-merit-calculator/"}, {"@type": "ListItem", "position": 4, "name": "GCU Merit Calculator 2026", "url": "https://meritkitni.pages.dev/gcu-merit-calculator/"}, {"@type": "ListItem", "position": 5, "name": "UCP Merit Calculator 2026", "url": "https://meritkitni.pages.dev/ucp-merit-calculator/"}, {"@type": "ListItem", "position": 6, "name": "UOL Merit Calculator 2026", "url": "https://meritkitni.pages.dev/uol-merit-calculator/"}, {"@type": "ListItem", "position": 7, "name": "UMT Merit Calculator 2026", "url": "https://meritkitni.pages.dev/umt-merit-calculator/"}, {"@type": "ListItem", "position": 8, "name": "GIFT University Merit Calculator 2026", "url": "https://meritkitni.pages.dev/gift-university-merit-calculator/"}, {"@type": "ListItem", "position": 9, "name": "University of Chenab Merit Calculator 2026", "url": "https://meritkitni.pages.dev/university-of-chenab-merit-calculator/"}, {"@type": "ListItem", "position": 10, "name": "GIMS & Arid University Merit Calculator 2026", "url": "https://meritkitni.pages.dev/gims-arid-merit-calculator/"}, {"@type": "ListItem", "position": 11, "name": "Superior University Merit Calculator 2026", "url": "https://meritkitni.pages.dev/superior-university-merit-calculator/"}, {"@type": "ListItem", "position": 12, "name": "LCWU Merit Calculator 2026", "url": "https://meritkitni.pages.dev/lcwu-merit-calculator/"}, {"@type": "ListItem", "position": 13, "name": "University of Education Merit Calculator 2026", "url": "https://meritkitni.pages.dev/university-of-education-merit-calculator/"}, {"@type": "ListItem", "position": 14, "name": "UVAS Merit Calculator 2026", "url": "https://meritkitni.pages.dev/uvas-merit-calculator/"}, {"@type": "ListItem", "position": 15, "name": "FAST Aggregate Calculator 2026", "url": "https://meritkitni.pages.dev/fast-aggregate-calculator/"}, {"@type": "ListItem", "position": 16, "name": "COMSATS Merit Calculator 2026", "url": "https://meritkitni.pages.dev/comsats-merit-calculator/"}, {"@type": "ListItem", "position": 17, "name": "ITU Merit Calculator 2026", "url": "https://meritkitni.pages.dev/itu-merit-calculator/"}, {"@type": "ListItem", "position": 18, "name": "MDCAT Aggregate Calculator 2026", "url": "https://meritkitni.pages.dev/mdcat-aggregate-calculator/"}, {"@type": "ListItem", "position": 19, "name": "NUST Aggregate Calculator 2026", "url": "https://meritkitni.pages.dev/nust-aggregate-calculator/"}, {"@type": "ListItem", "position": 20, "name": "GIKI Merit Calculator 2026", "url": "https://meritkitni.pages.dev/giki-merit-calculator/"}, {"@type": "ListItem", "position": 21, "name": "PIEAS Merit Calculator 2026", "url": "https://meritkitni.pages.dev/pieas-merit-calculator/"}, {"@type": "ListItem", "position": 22, "name": "Air University Merit Calculator 2026", "url": "https://meritkitni.pages.dev/air-university-merit-calculator/"}, {"@type": "ListItem", "position": 23, "name": "Bahria University Merit Calculator 2026", "url": "https://meritkitni.pages.dev/bahria-university-merit-calculator/"}, {"@type": "ListItem", "position": 24, "name": "NUTECH Merit Calculator 2026", "url": "https://meritkitni.pages.dev/nutech-merit-calculator/"}, {"@type": "ListItem", "position": 25, "name": "QAU Merit Calculator 2026", "url": "https://meritkitni.pages.dev/qau-merit-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Merit Calculator free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The app and the web version are completely free, with no ads and no sign-up."}}, {"@type": "Question", "name": "How is merit calculated in Pakistani universities?", "acceptedAnswer": {"@type": "Answer", "text": "Each university combines Matric, Intermediate and entry test percentages with its own weights. For example UET Lahore uses 17% Matric, 50% Inter and 33% ECAT, while NUST uses 10% Matric, 15% Inter and 75% NET. Merit Calculator applies each university’s formula for you."}}, {"@type": "Question", "name": "How accurate are the results?", "acceptedAnswer": {"@type": "Answer", "text": "Formulas marked Official come from the university’s own admission notices and were checked in October 2026. Universities can change formulas between seasons, so always confirm on the official admission page. Results are estimates and don’t guarantee admission."}}, {"@type": "Question", "name": "My Inter Part-II result isn’t out yet. Can I still use it?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Enter your Part-I marks and Part-I total (for example 480 out of 550). Most universities use Part-I marks for admission anyway."}}, {"@type": "Question", "name": "Do you save my marks?", "acceptedAnswer": {"@type": "Answer", "text": "Your marks are saved only on your own device. Nothing is sent to a server."}}, {"@type": "Question", "name": "Can I use it on iPhone?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Open the web app in Safari, tap Share, then Add to Home Screen."}}]}]}</script>
 </head>
 <body>
 
-<!-- Splash -->
-<div id="splash" role="status" aria-label="Loading Merit Calculator">
-  <svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><use href="#appicon"/></svg>
-  <div class="nm">Merit Calculator</div>
-  <div class="tg">Merit kitni banegi?</div>
-  <div class="dots"><i></i><i></i><i></i></div>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22A06A"/><stop offset="1" stop-color="#0B4029"/></linearGradient>
+  <symbol id="appicon" viewBox="0 0 512 512">
+    <rect width="512" height="512" rx="116" fill="url(#ig)"/>
+    <rect x="150" y="352" width="54" height="72" rx="14" fill="#A8F0CB"/><rect x="229" y="316" width="54" height="108" rx="14" fill="#6FDCA5"/><rect x="308" y="276" width="54" height="148" rx="14" fill="#FFFFFF"/>
+    <path d="M256 84l170 68-170 68-170-68z" fill="#FFFFFF"/><path d="M160 186v44c0 22 43 40 96 40s96-18 96-40v-44l-96 38z" fill="#FFFFFF" opacity=".88"/>
+    <path d="M426 152v74" stroke="#FFD66B" stroke-width="12" stroke-linecap="round"/><circle cx="426" cy="236" r="15" fill="#FFD66B"/>
+  </symbol>
+  <symbol id="i-android" viewBox="0 0 24 24"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22A11.4 11.4 0 0012 8.1c-1.78 0-3.47.38-4.92 1.04L5.22 5.92a.38.38 0 00-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5c-2.6-2.7-3.9-5.9-3.9-9.5s1.3-6.8 3.9-9.5z"/></g></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5a11.5 11.5 0 00-3.64 22.4c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0012 .5z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M3 6l9 7 9-7"/></g></symbol>
+</defs></svg>
 
-<!-- Onboarding -->
-<div id="onboard" aria-label="Welcome">
-  <button class="link skip" id="obSkip" type="button">Skip</button>
-  <div class="slides" id="slides">
-    <div class="slide">
-      <div class="art" style="background:var(--green-soft)">
-        <div style="display:grid;gap:10px;width:70%">
-          <div class="mini">Matric&nbsp;&nbsp;<span style="color:var(--muted)">1020 / 1100</span></div>
-          <div class="mini">Inter&nbsp;&nbsp;<span style="color:var(--muted)">980 / 1100</span></div>
-          <div class="mini">Entry test&nbsp;&nbsp;<span style="color:var(--muted)">140 / 200</span></div>
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Merit Calculator home"><svg aria-hidden="true"><use href="#appicon"/></svg>Merit Calculator</a>
+    <nav class="navlinks" aria-label="Sections">
+      <a href="#how">How it works</a><a href="#features">Features</a><a href="#universities">Universities</a><a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn primary small" href="app/">Open web app</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="pill">Merit Calculator 2026 for UET, PU, UOG &amp; 25+ universities</h1>
+        <p class="display">Merit kitni <em>banegi?</em></p>
+        <p class="lede">Free merit and aggregate calculator for Pakistani universities. Enter your Matric, Inter and entry test marks once. Merit Calculator works out your aggregate for every university you’re applying to, each with its own formula, so you stop doing the maths by hand.</p>
+        <div class="ctas">
+          <a class="btn primary apk" href="#download-apk"><svg aria-hidden="true"><use href="#i-android"/></svg><span class="two">Download APK<small>Android app, free</small></span></a>
+          <a class="btn secondary" href="app/"><svg aria-hidden="true"><use href="#i-web"/></svg><span class="two">Use on the web<small>Any phone or laptop</small></span></a>
+        </div>
+        <div class="facts">
+          <div><b>38</b>admission formulas</div>
+          <div><b>25+</b>universities &amp; colleges</div>
+          <div><b>30 sec</b>to see your merit</div>
         </div>
       </div>
-      <h2>Enter your marks once</h2>
-      <p>Matric, Inter and your entry test scores. No more doing the maths by hand.</p>
+      <div class="phone-zone" aria-hidden="true">
+        <div class="phone">
+          <div class="screen">
+            <div class="sbar"><span>9:41</span><span class="notch"></span><span>100%</span></div>
+            <div class="ptop"><svg><use href="#appicon"/></svg>My merit</div>
+            <div class="phero"><div class="k">Your highest aggregate</div><div class="v">89.09<small>%</small></div><div class="s">University of Gujrat · Computing</div></div>
+            <div class="prow"><div class="t"><span class="av" style="background:#B4531F">PU</span><span class="n">Punjab University<span>BS with entry test</span></span><span class="p">85.36%</span></div><div class="bar"><i style="width:85%"></i></div></div>
+            <div class="prow"><div class="t"><span class="av" style="background:#24338F">UET</span><span class="n">UET Lahore<span>Engineering (ECAT)</span></span><span class="p">84.23%</span></div><div class="bar"><i style="width:84%"></i></div></div>
+            <div class="prow"><div class="t"><span class="av" style="background:#0F7C8C">GIFT</span><span class="n">GIFT University<span>BS programmes</span></span><span class="p">81.6%</span></div><div class="bar"><i style="width:81%"></i></div></div>
+            <div class="ptabs"><span>Calculate</span><span class="on">My merit</span><span>Universities</span></div>
+          </div>
+        </div>
+        <div class="float f1"><b>17 · 50 · 33</b>UET formula</div>
+        <div class="float f2"><b>239 / 400</b>ECAT needed for 80%</div>
+      </div>
     </div>
-    <div class="slide">
-      <div class="art" style="background:#E3E7FB">
-        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:84%">
-          <span class="mini">UET</span><span class="mini">PU</span><span class="mini">UCP</span><span class="mini">GIFT</span><span class="mini">UOG</span><span class="mini">GCU</span><span class="mini">Chenab</span><span class="mini">FAST</span>
+  </section>
+
+  <section class="problem">
+    <div class="wrap reveal">
+      <span class="kicker">The problem</span>
+      <h2>Same marks. Different merit at every university.</h2>
+      <p class="lede">Every university weighs Matric, Inter and the entry test its own way, and some use Part-I marks or add Hafiz-e-Quran bonus marks. Students end up calculating each one by hand, and one mistake can mean the wrong choice on your application.</p>
+      <div class="compare">
+        <div class="ccard"><h3>UET Lahore</h3><p class="sub">Engineering, ECAT</p>
+          <div class="wbar"><i style="flex:17;background:#A8F0CB"></i><i style="flex:50;background:#4CC48A"></i><i style="flex:33;background:#fff"></i></div>
+          <div class="legend"><span style="--c:#A8F0CB">Matric 17%</span><span style="--c:#4CC48A">Inter 50%</span><span style="--c:#fff">ECAT 33%</span></div></div>
+        <div class="ccard"><h3>NUST</h3><p class="sub">Engineering &amp; computing, NET</p>
+          <div class="wbar"><i style="flex:10;background:#A8F0CB"></i><i style="flex:15;background:#4CC48A"></i><i style="flex:75;background:#fff"></i></div>
+          <div class="legend"><span style="--c:#A8F0CB">Matric 10%</span><span style="--c:#4CC48A">Inter 15%</span><span style="--c:#fff">NET 75%</span></div></div>
+        <div class="ccard"><h3>University of Gujrat</h3><p class="sub">Computing</p>
+          <div class="wbar"><i style="flex:100;background:#4CC48A"></i></div>
+          <div class="legend"><span style="--c:#4CC48A">Inter Part-I 100%</span><span style="--c:rgba(255,255,255,.3)">No entry test</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap reveal">
+      <span class="kicker">How it works</span>
+      <h2>Your merit in three steps</h2>
+      <div class="steps">
+        <div class="step"><div class="no">1</div><h3>Pick your universities</h3><p>Choose every university you’re applying to, from Lahore, Gujranwala, Gujrat or other cities. Pick as many as you like.</p></div>
+        <div class="step"><div class="no">2</div><h3>Enter your marks</h3><p>Matric, Inter (Part-I is fine if Part-II isn’t out), and only the entry tests your chosen universities actually use.</p></div>
+        <div class="step"><div class="no">3</div><h3>See where you stand</h3><p>Your aggregate for every university, ranked from highest to lowest, with a breakdown of how each one is calculated.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="padding-top:0">
+    <div class="wrap reveal">
+      <span class="kicker">Features</span>
+      <h2>Built for admission season</h2>
+      <div class="feat">
+        <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V12M12 20V5M19 20v-9"/></svg></div><h3>Every university at once</h3><p>Type your marks one time and compare aggregates across all your universities side by side.</p></div>
+        <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div><h3>Target score finder</h3><p>Set the aggregate you want and see exactly how many marks you need in the entry test to get there.</p></div>
+        <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>Official vs estimate</h3><p>Formulas published by universities are marked Official. Where a university doesn’t publish weights, it’s marked Estimate and you can adjust it.</p></div>
+        <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><h3>Real formula details</h3><p>Punjab University’s ¼ Matric rule, GCU’s Part-I academics, GIKI’s averaged 15%, Hafiz-e-Quran bonus marks: handled for you.</p></div>
+        <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 8.5a15 15 0 0120 0M5.5 12a10 10 0 0113 0M9 15.5a5 5 0 016 0"/><path d="M3 3l18 18"/></svg></div><h3>Works offline</h3><p>Install the app once and use it anywhere, even without internet. Your marks stay saved on your phone.</p></div>
+        <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div><h3>Private by design</h3><p>No account, no sign-up, no ads. Your marks are stored only on your own device and never sent to a server.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="universities" style="padding-top:0">
+    <div class="wrap reveal">
+      <span class="kicker">Universities</span>
+      <h2>Lahore, Gujranwala, Gujrat and more</h2>
+      <p class="lede">Public and private universities, medical colleges and engineering programmes, each with its own formula. Tap a university for its own merit calculator, formula and worked example.</p>
+      <div class="cities">
+        <div class="city"><h3>Lahore <span>14 listed</span></h3><div class="chips"><a href="uet-merit-calculator/">UET Lahore</a><a href="punjab-university-merit-calculator/">Punjab University</a><a href="gcu-merit-calculator/">GCU Lahore</a><a href="uvas-merit-calculator/">UVAS</a><a href="fast-aggregate-calculator/">FAST-NUCES</a><a href="comsats-merit-calculator/">COMSATS</a><a href="itu-merit-calculator/">ITU</a><a href="umt-merit-calculator/">UMT</a><a href="ucp-merit-calculator/">UCP</a><a href="uol-merit-calculator/">University of Lahore</a><a href="superior-university-merit-calculator/">Superior University</a><a href="lcwu-merit-calculator/">LCWU</a><a href="university-of-education-merit-calculator/">University of Education</a><a href="mdcat-aggregate-calculator/">KEMU &amp; medical colleges</a></div></div>
+        <div class="city"><h3>Gujranwala <span>4 listed</span></h3><div class="chips"><a href="uet-merit-calculator/">UET RCET Gujranwala</a><a href="punjab-university-merit-calculator/">PU Gujranwala Campus</a><a href="gift-university-merit-calculator/">GIFT University</a><a href="mdcat-aggregate-calculator/">Gujranwala Medical College</a></div></div>
+        <div class="city"><h3>Gujrat <span>4 listed</span></h3><div class="chips"><a href="uog-merit-calculator/">University of Gujrat</a><a href="university-of-chenab-merit-calculator/">University of Chenab</a><a href="gims-arid-merit-calculator/">PMAS-Arid / GIMS</a><a href="mdcat-aggregate-calculator/">Nawaz Sharif Medical College</a></div></div>
+        <div class="city"><h3>Other cities <span>7 listed</span></h3><div class="chips"><a href="nust-aggregate-calculator/">NUST</a><a href="giki-merit-calculator/">GIKI</a><a href="pieas-merit-calculator/">PIEAS</a><a href="air-university-merit-calculator/">Air University</a><a href="bahria-university-merit-calculator/">Bahria University</a><a href="nutech-merit-calculator/">NUTECH</a><a href="qau-merit-calculator/">QAU</a></div></div>
+      </div>
+      <p class="note"><span><span class="badge o">Official formula</span> published by the university</span><span><span class="badge e">Estimate</span> weights not published, adjustable in the app</span></p>
+    </div>
+  </section>
+
+  <section id="audience" style="padding-top:0">
+    <div class="wrap reveal">
+      <span class="kicker">Who it’s for</span>
+      <h2>Made for everyone in admission season</h2>
+      <div class="aud">
+        <div class="acard"><div class="em" aria-hidden="true">🎓</div><h3>Students</h3><p>FSc, ICS, FA and I.Com students choosing where to apply after Inter, or planning their entry test target.</p></div>
+        <div class="acard"><div class="em" aria-hidden="true">👨‍👩‍👧</div><h3>Parents</h3><p>Understand your child’s real chances at each university without decoding admission notices.</p></div>
+        <div class="acard"><div class="em" aria-hidden="true">🏫</div><h3>Teachers &amp; academies</h3><p>Show students where they stand and what test score they need, in seconds, during counselling.</p></div>
+        <div class="acard"><div class="em" aria-hidden="true">🧭</div><h3>Career counsellors</h3><p>Compare many universities for one student quickly, with the formula behind every number visible.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="download" id="download">
+    <div class="wrap reveal">
+      <div class="dl" id="download-apk">
+        <div>
+          <h2>Get Merit Calculator</h2>
+          <p class="lede">Free on Android as an app, or use it right in your browser on any phone or laptop, including iPhone.</p>
+          <div class="ctas">
+            <a class="btn primary apk" href="#"><svg aria-hidden="true"><use href="#i-android"/></svg><span class="two">Download APK<small>Android 5.1 or newer</small></span></a>
+            <a class="btn secondary" href="app/"><svg aria-hidden="true"><use href="#i-web"/></svg><span class="two">Use on the web<small>No install needed</small></span></a>
+          </div>
+        </div>
+        <div class="install">
+          <h3>How to install the APK</h3>
+          <ol>
+            <li>Tap <strong>Download APK</strong> and open the file when it finishes.</li>
+            <li>If Android asks, allow <strong>Install unknown apps</strong> for your browser.</li>
+            <li>Tap <strong>Install</strong>. If Play Protect shows a warning, tap <strong>Install anyway</strong>.</li>
+          </ol>
+          <p>The warning appears because the app isn’t from the Play Store. Only download the APK from this page.</p>
         </div>
       </div>
-      <h2>Every university’s own formula</h2>
-      <p>Lahore, Gujranwala, Gujrat and more. Each one weighs Matric, Inter and the test differently.</p>
     </div>
-    <div class="slide">
-      <div class="art" style="background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#fff">
-        <div style="text-align:center"><div style="font:800 72px/1 var(--display);letter-spacing:-.04em">78.4<small style="font-size:.4em">%</small></div><div style="opacity:.85;margin-top:6px">Your UET aggregate</div></div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap reveal">
+      <span class="kicker">FAQ</span>
+      <h2>Questions students ask</h2>
+      <div class="faq">
+        <details><summary>Is Merit Calculator free?</summary><p>Yes. The app and the web version are completely free, with no ads and no sign-up.</p></details>
+        <details><summary>How accurate are the results?</summary><p>Formulas marked Official come from the university’s own admission notices and were checked in October 2026. Universities can change formulas between seasons, so always confirm on the official admission page before applying. Results are estimates and don’t guarantee admission.</p></details>
+        <details><summary>What does “Estimate” mean?</summary><p>Some private universities admit on academics plus their own test but don’t publish the exact weights. For these, the app uses a common pattern and lets you adjust the weights if the university tells you different numbers.</p></details>
+        <details><summary>My Inter Part-II result isn’t out yet. Can I still use it?</summary><p>Yes. Enter your Part-I marks and Part-I total (for example 480 out of 550). Most universities use Part-I marks for admission anyway.</p></details>
+        <details><summary>Do you save my marks?</summary><p>Your marks are saved only on your own device so you don’t have to type them again. Nothing is sent to us or anyone else. See the <a href="privacy.html">Privacy Policy</a>.</p></details>
+        <details><summary>Can I use it on iPhone?</summary><p>Yes. Open the web app in Safari, tap the Share button, then Add to Home Screen. It works like an app, even offline.</p></details>
+        <details><summary>My university isn’t listed.</summary><p>Message the creator using the contact details below with the university name and its admission notice, and it can be added in the next update.</p></details>
       </div>
-      <h2>See where you stand</h2>
-      <p>Your aggregate everywhere, ranked, plus the test score you need for your target.</p>
     </div>
+  </section>
+
+  <section id="creator" style="padding-top:0">
+    <div class="wrap reveal">
+      <div class="creator">
+        <img class="me" id="meImg" alt="Saad Ahmad" width="112" height="112" src="https://isaadahmad.com/images/saad.jpg" onerror="var d=document.createElement('div');d.className='me ini';d.setAttribute('aria-hidden','true');d.textContent='SA';this.replaceWith(d)">
+        <div>
+          <span class="kicker" style="margin-bottom:6px">Created by</span>
+          <h2>Saad Ahmad</h2>
+          <p class="role">Senior Frontend Developer · UI Lead Developer at AppLab (Qatar) · Pakistan 🇵🇰</p>
+          <p class="pitch">I’ve spent 8+ years building fast, responsive web apps with React, Vue, Nuxt and Next.js, from government portals in Qatar to tools made for Pakistan like KharchaBook. Need an app, website or tool like Merit Calculator? I’m available for freelance projects.</p>
+          <div class="stats"><span><b>8+</b> years</span><span><b>50+</b> projects</span><span><b>20+</b> happy clients</span></div>
+          <div class="socials" aria-label="Social profiles">
+            <a href="https://linkedin.com/in/isaadahmad" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://twitter.com/isaadahmad" target="_blank" rel="noopener">X (Twitter)</a>
+            <a href="https://dev.to/isaadahmad" target="_blank" rel="noopener">DEV</a>
+            <a href="mailto:hello@isaadahmad.com">hello@isaadahmad.com</a>
+          </div>
+        </div>
+        <div class="clinks">
+          <a class="btn primary" href="https://isaadahmad.com/contact" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-mail"/></svg>Hire me</a>
+          <a class="btn secondary" href="https://github.com/saadahmad888" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-gh"/></svg>Follow on GitHub</a>
+          <a class="btn secondary" href="https://isaadahmad.com" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-web"/></svg>isaadahmad.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="frow">
+      <div>© <span id="yr">2026</span> Merit Calculator · Designed &amp; developed by <a href="https://isaadahmad.com" style="font-weight:700">Saad Ahmad</a></div>
+      <nav class="flinks" aria-label="Legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a><a href="app/">Web app</a></nav>
+    </div>
+    <nav class="flinks" aria-label="Popular calculators" style="margin-top:18px;font-size:14px"><a href="uog-merit-calculator/">UOG merit calculator</a><a href="uet-merit-calculator/">UET aggregate calculator</a><a href="punjab-university-merit-calculator/">PU merit calculator</a><a href="mdcat-aggregate-calculator/">MDCAT aggregate calculator</a><a href="nust-aggregate-calculator/">NUST aggregate calculator</a><a href="gcu-merit-calculator/">GCU merit calculator</a><a href="ucp-merit-calculator/">UCP merit calculator</a><a href="fast-aggregate-calculator/">FAST aggregate calculator</a></nav>
+    <p class="disc">Merit Calculator is an independent tool and is not affiliated with, endorsed by or connected to any university, college, testing body or the PMDC. University names belong to their respective owners. Results are estimates; always confirm merit formulas on official admission pages.</p>
   </div>
-  <div class="obnav">
-    <div class="obdots" id="obDots"><i class="on"></i><i></i><i></i></div>
-    <button class="btn" id="obNext" type="button" style="flex:0 0 auto;padding:15px 28px">Next</button>
-  </div>
-</div>
-
-<!-- App -->
-<div id="app">
-  <header class="topbar">
-    <svg class="mark" viewBox="0 0 512 512" aria-hidden="true"><use href="#appicon"/></svg>
-    <h1 id="title">Calculate</h1>
-    <button class="iconbtn" id="infoBtn" type="button" aria-label="About the formulas">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>
-    </button>
-  </header>
-  <main class="screen" id="screen"></main>
-  <div class="actionbar" id="actionbar"></div>
-  <nav class="tabbar" role="tablist">
-    <button class="tab" role="tab" data-tab="calc" aria-selected="true"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg></span>Calculate</button>
-    <button class="tab" role="tab" data-tab="results" aria-selected="false"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V12M12 20V5M19 20v-9"/></svg></span>My merit</button>
-    <button class="tab" role="tab" data-tab="unis" aria-selected="false"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.6 2.2 3 5 3s5-1.4 5-3v-4.5"/></svg></span>Universities</button>
-  </nav>
-</div>
-
-<div class="scrim" id="scrim"></div>
-<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle"><div class="grab"></div><div class="sc" id="sheetBody"></div></div>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22A06A"/><stop offset="1" stop-color="#0B4029"/></linearGradient>
-    <symbol id="appicon" viewBox="0 0 512 512">
-      <rect width="512" height="512" rx="116" fill="url(#ig)"/>
-      <rect x="150" y="352" width="54" height="72" rx="14" fill="#A8F0CB"/>
-      <rect x="229" y="316" width="54" height="108" rx="14" fill="#6FDCA5"/>
-      <rect x="308" y="276" width="54" height="148" rx="14" fill="#FFFFFF"/>
-      <path d="M256 84l170 68-170 68-170-68z" fill="#FFFFFF"/>
-      <path d="M160 186v44c0 22 43 40 96 40s96-18 96-40v-44l-96 38z" fill="#FFFFFF" opacity=".88"/>
-      <path d="M426 152v74" stroke="#FFD66B" stroke-width="12" stroke-linecap="round"/>
-      <circle cx="426" cy="236" r="15" fill="#FFD66B"/>
-    </symbol>
-  </defs>
-</svg>
+</footer>
 
 <script>
-/* ================= FORMULA FILE =================
-   Update these each admission season.
-   kind: "std" = weights [Matric, Inter, Test]
-         "pu"  = Punjab University: [Academic, Test], Academic = (¼ Matric + Inter + Hafiz 20) / (¼ Matric total + Inter total)
-         "gcu" = [Academic, Test], Academic = (Matric + Inter Part-I) / (their totals)
-         "avg" = GIKI: [Academic, 0, Test], Academic = average of Matric % and Inter %
-   status: "official" = published by the university; "estimate" = not published, editable in the app */
-const TESTS = {
-  ECAT:{name:"ECAT",total:400}, PU:{name:"PU entry test",total:100}, GCU:{name:"GCU entry test",total:100},
-  MDCAT:{name:"MDCAT",total:180}, NU:{name:"FAST NU test",total:100}, NAT:{name:"NTS NAT",total:100},
-  ITU:{name:"ITU admission test",total:100}, ENG:{name:"Engineering entry test",total:400,hint:"Most accept ECAT. If you took a different test, change the total."},
-  UMT:{name:"UMT entry test",total:100}, UCP:{name:"UCP entry test",total:100}, UOL:{name:"UOL entry test",total:100},
-  SUP:{name:"Superior entry test",total:100}, LCWU:{name:"LCWU entry test",total:100}, UE:{name:"UE entry test",total:100},
-  GIFT:{name:"GIFT entry test",total:100}, UOG:{name:"UOG admission test",total:100}, CHENAB:{name:"Chenab entry test",total:100},
-  ARID:{name:"Arid / GIMS entry test",total:100}, NET:{name:"NUST NET",total:200}, GIKI:{name:"GIKI admission test",total:100},
-  PIEAS:{name:"PIEAS test percentile",total:100}, AU:{name:"Air University test",total:100}, BU:{name:"Bahria test",total:100},
-  NUET:{name:"NUET",total:100}, LAT:{name:"LAT",total:100}
-};
-const EST = "This university doesn’t publish its merit weights. The calculator uses a common pattern; tap Adjust weights if the university gives you different numbers.";
-const PEC = "Pakistan Engineering Council rules require at least 33% entry test and 50% Inter for engineering. The remaining 17% is shown as Matric.";
-const UNIS = [
-  // ---------- Lahore ----------
-  {id:"uet",city:"Lahore",uni:"UET Lahore",prog:"Engineering (ECAT)",kind:"std",w:[17,50,33],test:"ECAT",status:"official",note:"Also used by UET’s KSK campus and other ECAT-based engineering admissions in Punjab."},
-  {id:"pu-test",city:"Lahore",uni:"Punjab University",prog:"BS with entry test (CS, IT…)",kind:"pu",w:[70,30],test:"PU",status:"official",note:"Academic record uses PU’s basic formula: ¼ of Matric plus Inter. Hafiz-e-Quran gets 20 extra marks."},
-  {id:"pu",city:"Lahore",uni:"Punjab University",prog:"BS without entry test",kind:"pu",w:[100,0],test:null,status:"official",note:"PU’s basic formula: (¼ Matric + Inter + additional marks) ÷ (¼ Matric total + Inter total)."},
-  {id:"gcu",city:"Lahore",uni:"GCU Lahore",prog:"BS programmes",kind:"gcu",w:[70,30],test:"GCU",status:"official",note:"70% academics (Matric + Inter Part-I) and 30% entry test. You also need 50% in the test and interview."},
-  {id:"uvas",city:"Lahore",uni:"UVAS",prog:"Undergraduate",kind:"std",w:[30,70,0],test:null,status:"official",note:"Uses Inter Part-I marks. No entry test."},
-  {id:"lhr-med",city:"Lahore",uni:"Medical colleges",prog:"MBBS / BDS (KEMU, AIMC, SIMS, FJMU…)",kind:"std",w:[10,40,50],test:"MDCAT",status:"official",note:"PMDC formula used by every public and private medical college."},
-  {id:"fast",city:"Lahore",uni:"FAST-NUCES",prog:"Computing & business",kind:"std",w:[10,40,50],test:"NU",status:"official"},
-  {id:"fast-eng",city:"Lahore",uni:"FAST-NUCES",prog:"Engineering",kind:"std",w:[17,50,33],test:"NU",status:"official"},
-  {id:"comsats",city:"Lahore",uni:"COMSATS Lahore",prog:"BS programmes",kind:"std",w:[10,40,50],test:"NAT",status:"official",note:"Architecture and Design use separate rules."},
-  {id:"itu",city:"Lahore",uni:"ITU",prog:"CS & AI",kind:"std",w:[15,35,50],test:"ITU",status:"official"},
-  {id:"umt-eng",city:"Lahore",uni:"UMT",prog:"Engineering",kind:"std",w:[17,50,33],test:"ENG",status:"official",note:"UMT publishes 50% Inter and 33% entry test; the remaining 17% is shown as Matric."},
-  {id:"umt",city:"Lahore",uni:"UMT",prog:"Other BS programmes",kind:"std",w:[10,40,50],test:"UMT",status:"estimate"},
-  {id:"ucp-eng",city:"Lahore",uni:"UCP",prog:"Engineering",kind:"std",w:[17,50,33],test:"ENG",status:"estimate",note:PEC},
-  {id:"ucp",city:"Lahore",uni:"UCP",prog:"BS programmes",kind:"std",w:[10,40,50],test:"UCP",status:"estimate"},
-  {id:"uol-eng",city:"Lahore",uni:"University of Lahore",prog:"Engineering",kind:"std",w:[17,50,33],test:"ENG",status:"estimate",note:PEC},
-  {id:"uol",city:"Lahore",uni:"University of Lahore",prog:"BS programmes",kind:"std",w:[10,40,50],test:"UOL",status:"estimate"},
-  {id:"superior",city:"Lahore",uni:"Superior University",prog:"BS programmes",kind:"std",w:[10,40,50],test:"SUP",status:"estimate"},
-  {id:"lcwu",city:"Lahore",uni:"LCWU",prog:"BS programmes",kind:"std",w:[10,40,50],test:"LCWU",status:"estimate"},
-  {id:"ue",city:"Lahore",uni:"University of Education",prog:"BS programmes",kind:"std",w:[10,40,50],test:"UE",status:"estimate"},
-  // ---------- Gujranwala ----------
-  {id:"pug-test",city:"Gujranwala",uni:"PU Gujranwala Campus",prog:"BS CS & IT",kind:"pu",w:[70,30],test:"PU",status:"official",note:"Same PU formula as Lahore: 70% academic record, 30% entry test. Hafiz-e-Quran gets 20 extra marks."},
-  {id:"pug",city:"Gujranwala",uni:"PU Gujranwala Campus",prog:"BS without entry test",kind:"pu",w:[100,0],test:null,status:"official",note:"PU’s basic formula: (¼ Matric + Inter + additional marks) ÷ (¼ Matric total + Inter total)."},
-  {id:"gift",city:"Gujranwala",uni:"GIFT University",prog:"BS programmes",kind:"std",w:[10,40,50],test:"GIFT",status:"estimate"},
-  {id:"grw-med",city:"Gujranwala",uni:"Gujranwala Medical College",prog:"MBBS",kind:"std",w:[10,40,50],test:"MDCAT",status:"official",note:"PMDC formula."},
-  // ---------- Gujrat ----------
-  {id:"uog-cs",city:"Gujrat",uni:"University of Gujrat",prog:"Computing (CS, IT, SE)",kind:"std",w:[0,100,0],test:null,status:"official",note:"100% Inter Part-I (or first two DAE years). No entry test."},
-  {id:"uog-eng",city:"Gujrat",uni:"University of Gujrat",prog:"Engineering",kind:"std",w:[17,50,33],test:"ENG",status:"official",note:"Inter means Part-I or DAE."},
-  {id:"uog",city:"Gujrat",uni:"University of Gujrat",prog:"Other BS programmes",kind:"std",w:[0,50,50],test:"UOG",status:"official",note:"50% Inter and 50% UOG admission test. Some programmes add an interview, so check your programme’s notice."},
-  {id:"chenab",city:"Gujrat",uni:"University of Chenab",prog:"BS programmes",kind:"std",w:[10,40,50],test:"CHENAB",status:"estimate"},
-  {id:"arid",city:"Gujrat",uni:"PMAS-Arid / GIMS",prog:"BS programmes",kind:"std",w:[10,40,50],test:"ARID",status:"estimate"},
-  {id:"nsmc",city:"Gujrat",uni:"Nawaz Sharif Medical College",prog:"MBBS",kind:"std",w:[10,40,50],test:"MDCAT",status:"official",note:"PMDC formula."},
-  // ---------- Other cities ----------
-  {id:"nust",city:"Others",uni:"NUST",prog:"Engineering & computing",kind:"std",w:[10,15,75],test:"NET",status:"official",note:"Uses Inter Part-I marks."},
-  {id:"giki",city:"Others",uni:"GIKI",prog:"Engineering & computing",kind:"avg",w:[15,0,85],test:"GIKI",status:"official",note:"GIKI gives 15% to Matric and Inter Part-I together; the app averages the two."},
-  {id:"pieas",city:"Others",uni:"PIEAS",prog:"Engineering & sciences",kind:"std",w:[15,25,60],test:"PIEAS",status:"official",note:"Enter your test percentile, not raw marks."},
-  {id:"air",city:"Others",uni:"Air University",prog:"Engineering",kind:"std",w:[10,50,40],test:"AU",status:"official"},
-  {id:"bahria",city:"Others",uni:"Bahria University",prog:"Undergraduate",kind:"std",w:[10,30,60],test:"BU",status:"official"},
-  {id:"nutech",city:"Others",uni:"NUTECH",prog:"Undergraduate",kind:"std",w:[10,20,70],test:"NUET",status:"official"},
-  {id:"qau",city:"Others",uni:"QAU",prog:"BS programmes",kind:"std",w:[30,70,0],test:null,status:"official",note:"Uses Inter Part-I. No entry test."},
-  {id:"qau-llb",city:"Others",uni:"QAU",prog:"LLB",kind:"std",w:[20,50,30],test:"LAT",status:"official"}
-];
-const CITIES = ["Lahore","Gujranwala","Gujrat","Others"];
-/* Android app download link. Replace YOUR-GITHUB-NAME with your GitHub username. */
-const APK_URL = "https://github.com/YOUR-GITHUB-NAME/meritkitni/releases/latest/download/MeritCalculator.apk";
-/* ================ END FORMULA FILE ================ */
+/* APK download link (GitHub releases) */
+const APK_URL = "https://github.com/saadahmad888/meritkitni/releases/latest/download/MeritCalculator.apk";
+document.querySelectorAll(".apk").forEach(a => a.href = APK_URL);
+document.getElementById("yr").textContent = Math.max(2026, new Date().getFullYear());
 
-const $ = id => document.getElementById(id);
-const KEY = "merit-app-v2";
-const DEF = {onboarded:false, picked:[], ssc:{o:"",t:"1100"}, hssc:{o:"",t:"1100"}, hafiz:false, tests:{}, ov:{}, target:"75", city:"Lahore"};
-let S;
-try { S = Object.assign(JSON.parse(JSON.stringify(DEF)), JSON.parse(localStorage.getItem(KEY) || "{}")); }
-catch(e){ S = JSON.parse(JSON.stringify(DEF)); }
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} };
-let tab = "calc", step = 0, q = "", uniCity = S.city, sheetId = null;
-
-const byId = id => UNIS.find(u => u.id === id);
-const ts = k => (S.tests[k] ||= {o:"", t:String(TESTS[k].total)});
-const fmt = n => (Math.round(n*100)/100).toFixed(2).replace(/\.?0+$/, "");
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const num = v => parseFloat(v);
-function pct(p){ const o=num(p.o), t=num(p.t); if(p.o===""||isNaN(o)||!(t>0)||o<0||o>t) return null; return o/t*100; }
-function errOf(p){ if(p.o==="") return ""; const o=num(p.o), t=num(p.t);
-  if(isNaN(o)) return "Enter a number."; if(!(t>0)) return "Enter the total marks."; if(o<0) return "Marks can’t be negative."; if(o>t) return "Obtained marks can’t be more than the total."; return ""; }
-const COLORS = ["#17794D","#24338F","#B4531F","#7A3E9D","#0F7C8C","#9B2C4B","#5B6B12","#2E5E9E"];
-const SHORT={"UET Lahore":"UET","Punjab University":"PU","GCU Lahore":"GCU","UVAS":"UVAS","Medical colleges":"MBBS","FAST-NUCES":"FAST","COMSATS Lahore":"CUI","ITU":"ITU","UMT":"UMT","UCP":"UCP","University of Lahore":"UOL","Superior University":"SU","LCWU":"LCWU","University of Education":"UE","PU Gujranwala Campus":"PU","GIFT University":"GIFT","Gujranwala Medical College":"GMC","University of Gujrat":"UOG","University of Chenab":"UC","PMAS-Arid / GIMS":"GIMS","Nawaz Sharif Medical College":"NSMC","NUST":"NUST","GIKI":"GIKI","PIEAS":"PIE","Air University":"AU","Bahria University":"BU","NUTECH":"NUT","QAU":"QAU"};
-function avatar(u){ const n=[...u.uni].reduce((a,c)=>a+c.charCodeAt(0),0); const ab=SHORT[u.uni]||u.uni.slice(0,3).toUpperCase();
-  return `<span class="avatar" style="background:${COLORS[n%COLORS.length]};font-size:${ab.length>3?11:13}px">${esc(ab)}</span>`; }
-const weightsOf = u => (u.status==="estimate" && S.ov[u.id]) ? S.ov[u.id] : u.w;
-
-function compute(u){
-  const w = weightsOf(u), m = pct(S.ssc), h = pct(S.hssc);
-  const tv = u.test ? pct(ts(u.test)) : null;
-  const tname = u.test ? TESTS[u.test].name : "";
-  const parts = [];
-  if (u.kind === "pu" || u.kind === "gcu"){
-    let a = null;
-    if (m!=null && h!=null){
-      const mo=num(S.ssc.o), mt=num(S.ssc.t), io=num(S.hssc.o), it=num(S.hssc.t);
-      a = u.kind==="pu" ? Math.min(100,(mo/4+io+(S.hafiz?20:0))/(mt/4+it)*100) : (mo+io)/(mt+it)*100;
-    }
-    parts.push({k:"acad", label: u.kind==="pu" ? "Academic (¼ Matric + Inter)" : "Academic (Matric + Inter Part-I)", w:w[0], p:a});
-    if (w[1]>0) parts.push({k:"test", label:tname, w:w[1], p:tv});
-  } else if (u.kind === "avg"){
-    parts.push({k:"acad", label:"Matric + Inter (average)", w:w[0], p:(m!=null&&h!=null)?(m+h)/2:null});
-    parts.push({k:"test", label:tname, w:w[2], p:tv});
-  } else {
-    if (w[0]>0) parts.push({k:"m", label:"Matric", w:w[0], p:m});
-    if (w[1]>0) parts.push({k:"h", label:"Inter", w:w[1], p:h});
-    if (w[2]>0 && u.test) parts.push({k:"test", label:tname, w:w[2], p:tv});
-  }
-  const miss = new Set();
-  parts.forEach(p => { if (p.p!=null) return;
-    if (p.k==="m" || (p.k==="acad" && m==null)) miss.add("Matric");
-    if (p.k==="h" || (p.k==="acad" && h==null)) miss.add("Inter");
-    if (p.k==="test") miss.add(tname); });
-  parts.forEach(p => p.c = p.p==null ? null : p.p*p.w/100);
-  const sum = w.reduce((a,b)=>a+(+b||0),0);
-  const bad = Math.abs(sum-100) > 0.01;
-  const agg = (miss.size || bad) ? null : parts.reduce((a,p)=>a+p.c,0);
-  return {parts, miss:[...miss], agg, bad, w};
-}
-const formulaText = u => compute(u).parts.map(p=>`${fmt(p.w)}% ${p.label}`).join(" + ");
-const neededTests = () => [...new Set(S.picked.map(byId).filter(Boolean).filter(u=>u.test && compute(u).parts.some(p=>p.k==="test")).map(u=>u.test))];
-
-/* ---------- Rendering ---------- */
-const ICON_CHECK = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
-const ICON_CHEV = `<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>`;
-const ICON_SEARCH = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>`;
-
-function uniList(mode, city){
-  const qq = q.trim().toLowerCase();
-  const list = UNIS.filter(u => qq ? (u.uni+" "+u.prog+" "+u.city).toLowerCase().includes(qq) : u.city===city);
-  if (!list.length) return `<div class="empty"><p>No university matches “${esc(q)}”. Try a shorter name, like “UET” or “Punjab”.</p></div>`;
-  const groups = qq ? [...new Set(list.map(u=>u.city))] : [city];
-  return groups.map(c => `${qq?`<div class="group">${c}</div>`:""}<div class="rows">${list.filter(u=>u.city===c).map(u=>{
-    const on = S.picked.includes(u.id);
-    const trail = mode==="pick" ? `<span class="check">${on?ICON_CHECK:""}</span>` : ICON_CHEV;
-    const second = mode==="pick" ? esc(u.prog) : `${esc(u.prog)}<br>${esc(formulaText(u))}`;
-    return `<button class="urow" type="button" data-id="${u.id}" ${mode==="pick"?`role="checkbox" aria-checked="${on}"`:""}>${avatar(u)}<span class="txt"><span class="t1">${esc(u.uni)}</span><span class="t2" style="display:block">${second}</span><span class="badge ${u.status}">${u.status==="official"?"Official formula":"Estimate"}</span></span>${trail}</button>`;
-  }).join("")}</div>`).join("");
-}
-function cityBar(cur){ return `<div class="seg" role="group" aria-label="City">${CITIES.map(c=>`<button type="button" data-city="${c}" aria-pressed="${!q && c===cur}">${c}</button>`).join("")}</div>`; }
-function searchBox(){ return `<label class="search">${ICON_SEARCH}<input id="q" type="search" placeholder="Search universities" value="${esc(q)}" autocomplete="off"></label>`; }
-function progress(){ return `<div class="progress">${[0,1,2,3].map(i=>`<i class="${i<=step?"on":""}"></i>`).join("")}</div>`; }
-function marksCard(id, label, p, hint){
-  const e = errOf(p), v = pct(p);
-  return `<div class="card mk"><label for="${id}O">${label}</label>
-    <div class="pair"><input id="${id}O" inputmode="decimal" placeholder="Obtained" value="${esc(p.o)}" aria-label="${esc(label)} obtained"><span class="of">out of</span><input id="${id}T" class="tot" inputmode="decimal" value="${esc(p.t)}" aria-label="${esc(label)} total"></div>
-    <div class="live"><span>Percentage</span><b id="${id}P">${v==null?"–":fmt(v)+"%"}</b></div>
-    <div class="err" id="${id}E" ${e?"":"hidden"}>${e}</div>${hint?`<div class="hint">${hint}</div>`:""}</div>`;
-}
-function bindMarks(id, getP){
-  const upd = () => { const p=getP(), e=errOf(p), v=pct(p); $(id+"P").textContent = v==null?"–":fmt(v)+"%"; $(id+"E").textContent=e; $(id+"E").hidden=!e; save(); renderAction(); };
-  $(id+"O").addEventListener("input", ev => { getP().o = ev.target.value.trim(); upd(); });
-  $(id+"T").addEventListener("input", ev => { getP().t = ev.target.value.trim(); upd(); });
-}
-
-function renderCalc(){
-  const sc = $("screen");
-  if (step===0){
-    sc.innerHTML = `${progress()}<p class="stepno">Step 1 of 4</p><h2 class="h">Pick your universities</h2><p class="lead">Choose every university you’re applying to. You can pick from more than one city.</p>${searchBox()}${q?"":cityBar(S.city)}<div id="ulist">${uniList("pick", S.city)}</div>`;
-    bindList("pick");
-  } else if (step===1){
-    sc.innerHTML = `${progress()}<p class="stepno">Step 2 of 4</p><h2 class="h">Matric marks</h2><p class="lead">Your SSC result, or O-level equivalence.</p>${marksCard("ssc","Matric (SSC)",S.ssc,"Change the total if your board uses 1200 or another total.")}`;
-    bindMarks("ssc", ()=>S.ssc);
-  } else if (step===2){
-    sc.innerHTML = `${progress()}<p class="stepno">Step 3 of 4</p><h2 class="h">Inter marks</h2><p class="lead">Your FSc, ICS, FA or I.Com result.</p>
-      ${marksCard("hssc","Intermediate (HSSC)",S.hssc,"If Part-II isn’t out yet, enter Part-I marks and its total (e.g. 480 out of 550). Most universities use Part-I anyway.")}
-      <div class="card"><div class="toggle" id="hafizRow"><div><div class="tt">Hafiz-e-Quran</div><div class="ts">Adds 20 marks at Punjab University</div></div><button class="switch" id="hafiz" role="switch" aria-checked="${S.hafiz}" aria-label="Hafiz-e-Quran"></button></div></div>`;
-    bindMarks("hssc", ()=>S.hssc);
-    $("hafizRow").addEventListener("click", ()=>{ S.hafiz=!S.hafiz; $("hafiz").setAttribute("aria-checked",S.hafiz); save(); });
-  } else {
-    const need = neededTests();
-    sc.innerHTML = `${progress()}<p class="stepno">Step 4 of 4</p><h2 class="h">Entry test scores</h2><p class="lead">${need.length?"Only the tests your universities use. Leave one empty if you haven’t taken it yet.":"None of your universities need an entry test. You’re ready."}</p>
-      ${need.map(k=>{ const users=[...new Set(S.picked.map(byId).filter(u=>u&&u.test===k).map(u=>u.uni))].join(", ");
-        return `${marksCard("t_"+k, TESTS[k].name, ts(k), TESTS[k].hint||"")}`.replace(`</label>`,`</label><div class="usedby">Used by ${esc(users)}</div>`); }).join("")}`;
-    need.forEach(k => bindMarks("t_"+k, ()=>ts(k)));
-  }
-  renderAction();
-}
-function bindList(mode){
-  const qi = $("q");
-  if (qi) qi.addEventListener("input", e => { q = e.target.value; const pos=qi.selectionStart; refreshListOnly(mode); });
-  document.querySelectorAll(".seg [data-city]").forEach(b => b.addEventListener("click", () => {
-    if (mode==="pick"){ S.city=b.dataset.city; save(); } else uniCity=b.dataset.city;
-    document.querySelectorAll(".seg [data-city]").forEach(x=>x.setAttribute("aria-pressed", x===b));
-    $("ulist").innerHTML = uniList(mode, mode==="pick"?S.city:uniCity); bindRows(mode);
-  }));
-  bindRows(mode);
-}
-function refreshListOnly(mode){
-  const seg = document.querySelector(".seg");
-  if (q && seg) seg.style.display="none"; else if (seg) seg.style.display="";
-  if (!q && !seg){ const s=document.createElement("div"); s.innerHTML=cityBar(mode==="pick"?S.city:uniCity); $("ulist").before(s.firstChild); bindList2(mode); }
-  $("ulist").innerHTML = uniList(mode, mode==="pick"?S.city:uniCity); bindRows(mode);
-}
-function bindList2(mode){
-  document.querySelectorAll(".seg [data-city]").forEach(b => b.addEventListener("click", () => {
-    if (mode==="pick"){ S.city=b.dataset.city; save(); } else uniCity=b.dataset.city;
-    document.querySelectorAll(".seg [data-city]").forEach(x=>x.setAttribute("aria-pressed", x===b));
-    $("ulist").innerHTML = uniList(mode, mode==="pick"?S.city:uniCity); bindRows(mode);
-  }));
-}
-function bindRows(mode){
-  $("ulist").querySelectorAll(".urow").forEach(r => r.addEventListener("click", () => {
-    const id = r.dataset.id;
-    if (mode==="pick"){
-      const i = S.picked.indexOf(id);
-      if (i>=0) S.picked.splice(i,1); else S.picked.push(id);
-      const on = S.picked.includes(id);
-      r.setAttribute("aria-checked", on); r.querySelector(".check").innerHTML = on?ICON_CHECK:"";
-      save(); renderAction();
-    } else openSheet(id);
-  }));
-}
-
-function renderResults(){
-  const sc = $("screen");
-  const picked = S.picked.map(byId).filter(Boolean);
-  if (!picked.length){
-    sc.innerHTML = `<div class="empty"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.6 2.2 3 5 3s5-1.4 5-3v-4.5"/></svg><h2 class="h">No universities yet</h2><p>Pick the universities you’re applying to and your merit for each one shows up here.</p><button class="btn" id="goPick" type="button" style="max-width:260px;margin:0 auto">Choose universities</button></div>`;
-    $("goPick").addEventListener("click", ()=>{ step=0; setTab("calc"); });
-    renderAction(); return;
-  }
-  const rows = picked.map(u=>({u, r:compute(u)}));
-  const done = rows.filter(x=>x.r.agg!=null).sort((a,b)=>b.r.agg-a.r.agg);
-  const todo = rows.filter(x=>x.r.agg==null);
-  const best = done[0];
-  const hero = best
-    ? `<div class="hero"><div class="k">Your highest aggregate</div><div class="v">${fmt(best.r.agg)}<small>%</small></div><div class="s">${esc(best.u.uni)} · ${esc(best.u.prog)}</div></div>`
-    : `<div class="hero"><div class="k">Almost there</div><div class="s" style="margin-top:8px;font-size:17px">${todo[0].r.miss.length?`Add your ${esc(todo[0].r.miss.join(" and "))} marks to see your aggregate.`:`Fix the weights for ${esc(todo[0].u.uni)} so they add up to 100.`}</div></div>`;
-  const card = ({u,r}) => `<button class="rcard" type="button" data-id="${u.id}"><div class="rtop">${avatar(u)}<div class="txt"><div class="t1" style="font-weight:700">${esc(u.uni)}</div><div class="t2" style="color:var(--muted);font-size:13.5px">${esc(u.prog)}</div></div>
-      ${r.agg!=null?`<div class="rval">${fmt(r.agg)}%</div>`:`<div class="rval miss">Add ${r.miss.length?esc(r.miss[r.miss.length-1]):"weights"}</div>`}</div>
-      ${r.agg!=null?`<div class="rbar"><i style="width:${r.agg}%"></i></div>`:""}
-      ${u.status==="estimate"?`<span class="badge estimate">Estimate</span>`:""}</button>`;
-  sc.innerHTML = hero + done.map(card).join("") + todo.map(card).join("") +
-    `<div style="text-align:center;margin-top:8px"><button class="link" id="addMore" type="button">Add or remove universities</button></div>` +
-    (showApk()?`<div style="text-align:center"><a class="link" style="text-decoration:none;display:inline-block" href="${APK_URL}">Get the Android app</a></div>`:"");
-  sc.querySelectorAll(".rcard").forEach(c=>c.addEventListener("click",()=>openSheet(c.dataset.id)));
-  $("addMore").addEventListener("click", ()=>{ step=0; setTab("calc"); });
-  renderAction();
-}
-function renderUnis(){
-  $("screen").innerHTML = `<p class="lead" style="margin-top:4px">${UNIS.length} admission formulas across ${CITIES.length-1} cities and more. Tap one to see how it works.</p>${searchBox()}${q?"":cityBar(uniCity)}<div id="ulist">${uniList("browse", uniCity)}</div>`;
-  bindList("browse");
-  renderAction();
-}
-
-function renderAction(){
-  const a = $("actionbar");
-  if (tab!=="calc"){ a.style.display="none"; return; }
-  a.style.display="";
-  const n = S.picked.length;
-  let back = step>0 ? `<button class="btn ghost" id="back" type="button" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>` : "";
-  let label, dis=false;
-  if (step===0){ label = n ? `Continue with ${n} ${n===1?"university":"universities"}` : "Pick at least one"; dis=!n; }
-  else if (step===1){ label="Next"; dis = !!errOf(S.ssc); }
-  else if (step===2){ label="Next"; dis = !!errOf(S.hssc); }
-  else { label="See my merit"; dis = neededTests().some(k=>!!errOf(ts(k))); }
-  a.innerHTML = back + `<button class="btn" id="next" type="button" ${dis?"disabled":""}>${label}</button>`;
-  if (step>0) $("back").addEventListener("click", ()=>{ step--; renderCalc(); $("screen").scrollTop=0; });
-  $("next").addEventListener("click", ()=>{ if(step<3){ step++; q=""; renderCalc(); $("screen").scrollTop=0; } else setTab("results"); });
-}
-
-function setTab(t){
-  tab = t; q = "";
-  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===t));
-  $("title").textContent = {calc:"Calculate", results:"My merit", unis:"Universities"}[t];
-  ({calc:renderCalc, results:renderResults, unis:renderUnis})[t]();
-  $("screen").scrollTop = 0;
-}
-
-/* ---------- Sheet ---------- */
-function openSheet(id){
-  sheetId = id; const u = byId(id);
-  const testPart = u.test && compute(u).parts.some(p=>p.k==="test");
-  const w = weightsOf(u);
-  const wLabels = u.kind==="std" ? ["Matric %","Inter %","Test %"] : null;
-  $("sheetBody").innerHTML = `
-    <div style="display:flex;gap:12px;align-items:center">${avatar(u)}<div style="flex:1;min-width:0"><h2 id="sheetTitle">${esc(u.uni)}</h2><p class="sub">${esc(u.prog)} · ${esc(u.city)}</p></div>
-      <button class="iconbtn" id="closeSheet" type="button" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <span class="badge ${u.status}">${u.status==="official"?"Official formula":"Estimate"}</span>
-    <div id="sheetLive"></div>
-    ${testPart?`<div class="sec"><h3>${esc(TESTS[u.test].name)} score</h3>${marksCard("st",TESTS[u.test].name,ts(u.test),TESTS[u.test].hint||"").replace(/<label[^>]*>.*?<\/label>/,"")}</div>`:""}
-    ${testPart?`<div class="sec"><h3>Target</h3><div class="tgt"><span>I want an aggregate of</span><input id="tgt" inputmode="decimal" value="${esc(S.target)}" aria-label="Target aggregate"><span>%</span></div><p class="tgtout" id="tgtOut"></p></div>`:""}
-    ${u.status==="estimate" && wLabels?`<div class="sec"><h3>Adjust weights</h3><div class="wgrid">${wLabels.map((l,i)=>`<div><label for="w${i}">${l}</label><input id="w${i}" inputmode="decimal" value="${esc(w[i])}"></div>`).join("")}</div><div class="err" id="wErr" hidden></div><button class="link" id="wReset" type="button">Reset to default</button></div>`:""}
-    <div class="sec"><button class="btn ${S.picked.includes(id)?"ghost":""}" id="pickBtn" type="button" style="width:100%">${S.picked.includes(id)?"Remove from my list":"Add to my list"}</button></div>`;
-  updateSheet();
-  $("closeSheet").addEventListener("click", closeSheet);
-  if (testPart){
-    bindMarksSheet(u);
-    $("tgt").addEventListener("input", e=>{ S.target=e.target.value.trim(); save(); updateSheet(); });
-  }
-  if ($("w0")){
-    [0,1,2].forEach(i=>$("w"+i).addEventListener("input", ()=>{
-      const v=[0,1,2].map(j=>num($("w"+j).value)||0); S.ov[u.id]=v; save(); updateSheet(); afterChange(); }));
-    $("wReset").addEventListener("click", ()=>{ delete S.ov[u.id]; save(); openSheet(id); afterChange(); });
-  }
-  $("pickBtn").addEventListener("click", ()=>{ const i=S.picked.indexOf(id); if(i>=0) S.picked.splice(i,1); else S.picked.push(id); save(); openSheet(id); afterChange(); });
-  $("scrim").classList.add("open"); $("sheet").classList.add("open");
-  $("sheet").querySelector(".sc").scrollTop = 0;
-}
-function bindMarksSheet(u){
-  const p = () => ts(u.test);
-  const upd = () => { const e=errOf(p()), v=pct(p()); $("stP").textContent=v==null?"–":fmt(v)+"%"; $("stE").textContent=e; $("stE").hidden=!e; save(); updateSheet(); afterChange(); };
-  $("stO").addEventListener("input", e=>{ p().o=e.target.value.trim(); upd(); });
-  $("stT").addEventListener("input", e=>{ p().t=e.target.value.trim(); upd(); });
-}
-function updateSheet(){
-  const u = byId(sheetId), r = compute(u);
-  let top;
-  if (r.bad) top = `<div class="agg"><div class="m">These weights add up to ${fmt(r.w.reduce((a,b)=>a+(+b||0),0))}. Make them add up to 100.</div></div>`;
-  else if (r.agg==null) top = `<div class="agg"><div class="m">Add your ${esc(r.miss.join(" and "))} ${r.miss.length>1?"marks":"score"} to see your aggregate.</div>${parts(r)}</div>`;
-  else top = `<div class="agg"><div style="font-size:14px;opacity:.85;font-weight:600">Your aggregate</div><div class="v">${fmt(r.agg)}<small>%</small></div>${parts(r)}</div>`;
-  $("sheetLive").innerHTML = top + `<div class="sec"><h3>How it’s calculated</h3><div class="formula">${esc(formulaText(u))}</div>${u.note||u.status==="estimate"?`<p class="note">${esc(u.status==="estimate" && !u.note ? EST : (u.note||""))}${u.status==="estimate" && u.note ? " "+esc(EST):""}</p>`:""}${(r.miss.includes("Matric")||r.miss.includes("Inter"))?`<button class="link" id="goMarks" type="button">Enter Matric and Inter marks</button>`:""}</div>`;
-  const gm = $("goMarks"); if (gm) gm.addEventListener("click", ()=>{ closeSheet(); step = r.miss.includes("Matric")?1:2; setTab("calc"); });
-  if ($("wErr")){ $("wErr").textContent = r.bad ? "Weights must add up to 100." : ""; $("wErr").hidden = !r.bad; }
-  const out = $("tgtOut"); if (!out) return;
-  const tgt = num(S.target), tp = r.parts.find(p=>p.k==="test"), ac = r.parts.filter(p=>p.k!=="test");
-  if (r.bad){ out.textContent=""; return; }
-  if (ac.some(p=>p.c==null)) { out.textContent = "Add your Matric and Inter marks to see the score you need."; return; }
-  if (!(tgt>0 && tgt<=100)) { out.textContent = "Enter a target between 1 and 100."; return; }
-  const base = ac.reduce((a,p)=>a+p.c,0), need = (tgt-base)/(tp.w/100), T = TESTS[u.test], tot = num(ts(u.test).t)||T.total;
-  if (need<=0) out.innerHTML = `Your Matric and Inter alone already reach <strong>${fmt(tgt)}%</strong>.`;
-  else if (need>100) out.innerHTML = `Even full marks in ${esc(T.name)} gives <strong>${fmt(base+tp.w)}%</strong>, so ${fmt(tgt)}% isn’t reachable.`;
-  else out.innerHTML = `You need <strong>${fmt(Math.ceil(need/100*tot*100)/100)} out of ${fmt(tot)}</strong> in ${esc(T.name)} to reach ${fmt(tgt)}%.`;
-}
-const parts = r => r.parts.map(p=>`<div class="part"><div class="pl"><span>${esc(p.label)} · ${fmt(p.w)}%</span><b>${p.c==null?"–":fmt(p.c)+" / "+fmt(p.w)}</b></div><div class="pb"><i style="width:${p.p==null?0:p.p}%"></i></div></div>`).join("");
-function closeSheet(){ $("scrim").classList.remove("open"); $("sheet").classList.remove("open"); sheetId=null; }
-function afterChange(){ if (tab==="results") renderResults(); else if (tab==="unis"){ const s=$("screen").scrollTop; $("ulist").innerHTML=uniList("browse",uniCity); bindRows("browse"); $("screen").scrollTop=s; } }
-$("scrim").addEventListener("click", closeSheet);
-
-function openInfo(){
-  sheetId = null;
-  $("sheetBody").innerHTML = `<div style="display:flex;align-items:center"><h2 id="sheetTitle" style="flex:1">About the formulas</h2><button class="iconbtn" id="closeSheet" type="button" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <div class="sec"><p><span class="badge official">Official formula</span><br>Published by the university or its admitting body, checked October 2026.</p>
-    <p><span class="badge estimate">Estimate</span><br>The university admits on academics plus its own test but doesn’t publish the weights. The app uses a common pattern you can adjust.</p>
-    <p class="note">Formulas change between admission seasons, and some programmes have their own rules. Always confirm on the university’s admission page before you apply.</p>
-    <p class="note">Not included: LUMS, which uses holistic review instead of a formula.</p></div>
-    ${showApk()?`<div class="sec"><a class="btn" href="${APK_URL}" style="text-decoration:none;width:100%">Download Android app (APK)</a></div>`:""}
-    <div class="sec"><button class="btn ghost" id="reset" type="button" style="width:100%">Clear all my marks</button></div>`;
-  $("closeSheet").addEventListener("click", closeSheet);
-  $("reset").addEventListener("click", ()=>{ S.ssc={o:"",t:"1100"}; S.hssc={o:"",t:"1100"}; S.tests={}; S.hafiz=false; save(); closeSheet(); step=1; setTab("calc"); });
-  $("scrim").classList.add("open"); $("sheet").classList.add("open");
-}
-$("infoBtn").addEventListener("click", openInfo);
-document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
-document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeSheet(); });
-
-/* ---------- Onboarding ---------- */
-let ob = 0;
-function obGo(i){
-  ob = i;
-  document.querySelectorAll(".slide").forEach(s=>s.style.transform=`translateX(${-100*ob}%)`);
-  document.querySelectorAll("#obDots i").forEach((d,j)=>d.classList.toggle("on", j===ob));
-  $("obNext").textContent = ob===2 ? "Get started" : "Next";
-}
-function obDone(){ S.onboarded=true; save(); $("onboard").classList.remove("show"); }
-$("obNext").addEventListener("click", ()=> ob<2 ? obGo(ob+1) : obDone());
-$("obSkip").addEventListener("click", obDone);
-let sx=null;
-$("slides").addEventListener("touchstart", e=>{ sx=e.touches[0].clientX; }, {passive:true});
-$("slides").addEventListener("touchend", e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; if(dx<-50&&ob<2) obGo(ob+1); if(dx>50&&ob>0) obGo(ob-1); sx=null; });
-
-/* ---------- Start ---------- */
-function isApp(){ return !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); }
-function showApk(){ return !isApp() && !APK_URL.includes("YOUR-GITHUB-NAME"); }
-if ("serviceWorker" in navigator && location.protocol === "https:" && !isApp()) {
-  navigator.serviceWorker.register("sw.js").catch(()=>{});
-}
-setTab("calc");
-if (!S.onboarded) $("onboard").classList.add("show");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-setTimeout(()=>{ $("splash").classList.add("hide"); setTimeout(()=>$("splash").remove(), 500); }, reduce ? 300 : 1600);
+const hdr = document.querySelector("header");
+addEventListener("scroll", () => hdr.classList.toggle("scrolled", scrollY > 8), {passive:true});
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.12}) : null;
+document.querySelectorAll(".reveal").forEach(el => io ? io.observe(el) : el.classList.add("in"));
 </script>
 </body>
 </html>

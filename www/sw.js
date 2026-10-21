@@ -1,10 +1,7 @@
-// Offline support: serve the latest version when online, the saved copy when offline.
-const CACHE = "merit-v1";
-const FILES = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
-self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
-self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== CACHE).map(x => caches.delete(x))))); self.clients.claim(); });
-self.addEventListener("fetch", e => {
-  if (e.request.method !== "GET" || !e.request.url.startsWith(self.location.origin)) return;
-  e.respondWith(fetch(e.request).then(r => { const c = r.clone(); caches.open(CACHE).then(x => x.put(e.request, c)); return r; })
-    .catch(() => caches.match(e.request).then(r => r || caches.match("./index.html"))));
+// The app moved to /app/. This removes the old root-level offline cache from browsers that installed it before.
+self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", e => {
+  e.waitUntil(caches.keys().then(k => Promise.all(k.map(x => caches.delete(x))))
+    .then(() => self.registration.unregister())
+    .then(() => self.clients.matchAll()).then(cs => cs.forEach(c => c.navigate(c.url))));
 });
